@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>User__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
+    <fullName>Participant__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
     <externalId>false</externalId>
-    <label>User</label>
-    <referenceTo>User</referenceTo>
+    <label>Participant</label>
+    <referenceTo>Participant__c</referenceTo>
+    <relationshipLabel>Meeting Assignments</relationshipLabel>
     <relationshipName>Meeting_Assignments</relationshipName>
-    <required>false</required>
+    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
