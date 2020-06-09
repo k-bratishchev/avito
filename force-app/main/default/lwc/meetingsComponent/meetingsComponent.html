@@ -1,0 +1,20 @@
+<template>
+    <h1>Participant Component</h1>
+    <template if:true={loading}>
+        <div class="slds-spinner_inline slds-align_absolute-center spinner">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+    <template if:true={showMeetingsList}>
+        <c-meetings-list></c-meetings-list>
+    </template>
+    <template if:true={showParticipantsList}>
+        <c-participants-list meeting-id={meetingId}></c-participants-list>
+    </template>
+    <template if:true={showMeetingDetails}>
+        <c-meeting-details meeting-id={meetingId}></c-meeting-details>
+    </template>
+    <template if:true={showParticipantDetails}>
+        <c-meeting-details meeting-id={meetingId}></c-meeting-details>
+    </template>
+</template>
