@@ -1,3 +1,14 @@
 <template>
-    <h1>Participant List</h1>
+    <lightning-card class="dev-plan-card slds-size_1-of-1" title="Participants List" icon-name="standard:groups">
+        <div style="height: 300px;">
+            <lightning-datatable
+                    key-field="Id"
+                    data={participantsList.data}
+                    row-number-offset={rowOffset}
+                    suppress-bottom-bar
+                    columns={columns}
+                    onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
 </template>

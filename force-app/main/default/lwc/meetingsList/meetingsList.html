@@ -1,5 +1,9 @@
 <template>
-    <h1>Participant List</h1>
+    <template if:true={loading}>
+        <div class="slds-spinner_inline slds-align_absolute-center spinner">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
     <div style="height: 300px;">
         <lightning-datatable
                 key-field="id"

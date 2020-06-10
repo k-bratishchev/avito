@@ -1,3 +1,8 @@
 <template>
     <h1>Meeting Details</h1>
+    <template if:true={loading}>
+        <div class="slds-spinner_inline slds-align_absolute-center spinner">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
 </template>

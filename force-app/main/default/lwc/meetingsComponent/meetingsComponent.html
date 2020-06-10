@@ -1,20 +1,23 @@
 <template>
-    <h1>Participant Component</h1>
-    <template if:true={loading}>
-        <div class="slds-spinner_inline slds-align_absolute-center spinner">
-            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-        </div>
-    </template>
-    <template if:true={showMeetingsList}>
-        <c-meetings-list></c-meetings-list>
-    </template>
-    <template if:true={showParticipantsList}>
-        <c-participants-list meeting-id={meetingId}></c-participants-list>
-    </template>
-    <template if:true={showMeetingDetails}>
-        <c-meeting-details meeting-id={meetingId}></c-meeting-details>
-    </template>
-    <template if:true={showParticipantDetails}>
-        <c-meeting-details meeting-id={meetingId}></c-meeting-details>
-    </template>
+    <lightning-card class="dev-plan-card slds-size_1-of-1" title="Meetings Component">
+        <lightning-tabset>
+            <lightning-tab label="Meetings">
+                <template if:true={showMeetingsList}>
+                    <c-meetings-list></c-meetings-list>
+                </template>
+                <template if:true={showMeetingDetails}>
+                    <c-meeting-details meeting-id={meetingId}></c-meeting-details>
+                </template>
+            </lightning-tab>
+            <lightning-tab label="Participants">
+                <template if:true={showParticipantsList}>
+                    <c-participants-list onedit={editParticipant}></c-participants-list>
+                    <lightning-button variant="brand" label="Create" title="Create Participant" onclick={onCreateParticipant} class="slds-m-left_x-small"></lightning-button>
+                </template>
+                <template if:true={showParticipantDetails}>
+                    <c-participant-details participant-id={participantId} onclose={toggleParticipantDetails}></c-participant-details>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+</lightning-card>
 </template>

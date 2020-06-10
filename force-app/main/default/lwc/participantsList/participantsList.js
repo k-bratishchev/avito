@@ -1,3 +1,43 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 
-export default class ParticipantsList extends LightningElement {}
+import getParticipantsList from '@salesforce/apex/ParticipantsController.getParticipantsList';
+
+const actions = [
+    { label: 'Edit', name: 'edit' },
+    { label: 'Assign', name: 'assign' },
+];
+
+const columns = [
+    { label: 'First Name', fieldName: 'First_Name__c'},
+    { label: 'Last Name', fieldName: 'Last_Name__c'},
+    { label: 'Phone', fieldName: 'Phone__c' },
+    { label: 'Email', fieldName: 'Email__c' },
+    {
+        type: 'action',
+        typeAttributes: { rowActions: actions },
+    },
+];
+
+export default class ParticipantsList extends LightningElement {
+    data = [];
+    columns = columns;
+
+    @wire(getParticipantsList)
+    participantsList
+
+    renderedCallback() {
+        refreshApex(this.participantsList);
+    }
+
+    handleRowAction(event) {
+        const actionName = event.detail.action.name;
+        const id = event.detail.row.Id;
+        switch (actionName) {
+            case 'edit':
+                this.dispatchEvent(new CustomEvent('edit', { detail: id }));
+                break;
+            default:
+        }
+    }
+}

@@ -1,3 +1,12 @@
 <template>
-    <h1>Participant Details</h1>
+    <lightning-card class="dev-plan-card slds-size_1-of-1" title={title} icon-name="standard:avatar">
+        <lightning-record-form
+            record-id={participantId}
+            object-api-name="Participant__c"
+            fields={fields}
+            mode="Edit"
+            onsuccess={showParticipantList}
+            oncancel={showParticipantList}>
+        </lightning-record-form>
+    </lightning-card>
 </template>
