@@ -1,7 +1,7 @@
 <template>
     <lightning-card class="dev-plan-card slds-size_1-of-1" title={title} icon-name="standard:display_text">
-        <lightning-record-form record-id={meetingId} object-api-name="Meeting__c" fields={fields} mode="Edit"
-            onsuccess={showMeetingList} oncancel={showMeetingList}>
+        <lightning-record-form record-id={meetingAssignmentId} object-api-name="Meeting_Assignment__c" fields={fields} mode="Edit"
+            onsuccess={showMAList} oncancel={showMAList}>
             </lightning-record-form>
     </lightning-card>
 

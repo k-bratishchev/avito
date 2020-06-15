@@ -1,17 +1,21 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
+import { deleteRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-//import updateMeetings from '@salesforce/apex/DevPlanController.updateMeetings';
+import getMeetingsList from '@salesforce/apex/MeetingsController.getMeetingsList';
+import sendInvites from '@salesforce/apex/MeetingsController.sendInvites';
 
 const actions = [
-    { label: 'Show Assigned Users', name: 'show_users' },
-    { label: 'Cancel', name: 'cancel' },
+    { label: 'Edit', name: 'edit' },
+    { label: 'Delete', name: 'delete' },
+    { label: 'Invite All', name: 'invite' }
 ];
 
 const columns = [
-    { label: 'Meeting Name', fieldName: 'Name', editable: true },
-    { label: 'Start', fieldName: 'Start', type: 'date', editable: true },
-    { label: 'End', fieldName: 'End', type: 'date', editable: true },
-    { label: 'Status', fieldName: 'Status' },
+    { label: 'Name', fieldName: 'Name'},
+    { label: 'Start', fieldName: 'Start__c'},
+    { label: 'End', fieldName: 'End__c' },
     {
         type: 'action',
         typeAttributes: { rowActions: actions },
@@ -19,47 +23,66 @@ const columns = [
 ];
 
 export default class MeetingsList extends LightningElement {
-    data = [];
     columns = columns;
-    record = {};
+
+    @wire(getMeetingsList)
+    meetingsList
+
+    renderedCallback() {
+        refreshApex(this.meetingsList);
+    }
 
     handleRowAction(event) {
         const actionName = event.detail.action.name;
-        const row = event.detail.row;
+        const id = event.detail.row.Id;
         switch (actionName) {
-            case 'show_users':
-                this.deleteRow(row);
+            case 'edit':
+                this.dispatchEvent(new CustomEvent('editmeeting', { detail: id }));
                 break;
-            case 'cancel':
-                this.updateMeetings(row);
+            case 'delete':
+                deleteRecord(id)
+                    .then(() => {
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Success',
+                                message: 'Record deleted',
+                                variant: 'success'
+                            })
+                        );
+                        refreshApex(this.meetingsList);
+                    })
+                    .catch(error => {
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error deleting record',
+                                message: error.body.message,
+                                variant: 'error'
+                            })
+                        );
+                    });
+                break;
+                case 'invite':
+                    sendInvites({meetingId: id})
+                        .then(() => {
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Success',
+                                    message: 'Invites were succesfully sended',
+                                    variant: 'success'
+                                })
+                            );
+                        })
+                        .catch(error => {
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error sending invites',
+                                    message: error.body.message,
+                                    variant: 'error'
+                                })
+                            );
+                        });
                 break;
             default:
         }
-    }
-
-    deleteRow(row) {
-        const { id } = row;
-        const index = this.findRowIndexById(id);
-        if (index !== -1) {
-            this.data = this.data
-                .slice(0, index)
-                .concat(this.data.slice(index + 1));
-        }
-    }
-
-    findRowIndexById(id) {
-        let ret = -1;
-        this.data.some((row, index) => {
-            if (row.id === id) {
-                ret = index;
-                return true;
-            }
-            return false;
-        });
-        return ret;
-    }
-
-    showRowDetails(row) {
-        this.record = row;
     }
 }

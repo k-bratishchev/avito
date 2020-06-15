@@ -15,7 +15,7 @@ ORG_NAME="Avito Scratch $1"
 # Update SFDX Cli
 sfdx update
 
-# By default org's lifetime equals 7 days
+# By default org's lifetime equals 30 days
 sfdx force:org:create orgName="$ORG_NAME" -f config/project-scratch-def.json -s -a $ORG_ALIAS -d 30 --loglevel error
 
 # Deploy metadata and settings, configure org

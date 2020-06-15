@@ -5,9 +5,13 @@ export default class MeetingsComponent extends LightningElement {
     showParticipantsList = true;
     showMeetingDetails = false;
     showParticipantDetails = false;
+    showMAList = true;
+    showMADetails = false;
     loading = false;
 
     participantId = null;
+    meetingId = null;
+    meetingAssignmentId = null;
 
     onCreateParticipant() {
         this.participantId = null;
@@ -24,4 +28,33 @@ export default class MeetingsComponent extends LightningElement {
         this.toggleParticipantDetails();
     }
 
+    onCreateMeeting() {
+        this.meetingId = null;
+        this.toggleMeetingDetails();
+    }
+
+    toggleMeetingDetails () {
+        this.showMeetingsList = !this.showMeetingsList;
+        this.showMeetingDetails = !this.showMeetingsList;
+    }
+
+    editMeeting(event) {
+        this.meetingId = event.detail;
+        this.toggleMeetingDetails();
+    }
+
+    onCreateMA() {
+        this.meetingAssignmentId = null;
+        this.toggleMADetails();
+    }
+
+    toggleMADetails () {
+        this.showMAList = !this.showMAList;
+        this.showMADetails = !this.showMAList;
+    }
+
+    editMA(event) {
+        this.meetingAssignmentId = event.detail;
+        this.toggleMADetails();
+    }
 }

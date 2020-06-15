@@ -3,21 +3,31 @@
         <lightning-tabset>
             <lightning-tab label="Meetings">
                 <template if:true={showMeetingsList}>
-                    <c-meetings-list></c-meetings-list>
+                    <c-meetings-list oneditmeeting={editMeeting}></c-meetings-list>
+                    <lightning-button variant="brand" label="Create" title="Create Meeting" onclick={onCreateMeeting} class="slds-m-left_x-small"></lightning-button>
                 </template>
                 <template if:true={showMeetingDetails}>
-                    <c-meeting-details meeting-id={meetingId}></c-meeting-details>
+                    <c-meeting-details meeting-id={meetingId} onclose={toggleMeetingDetails}></c-meeting-details>
                 </template>
             </lightning-tab>
             <lightning-tab label="Participants">
                 <template if:true={showParticipantsList}>
-                    <c-participants-list onedit={editParticipant}></c-participants-list>
+                    <c-participants-list oneditparticipant={editParticipant}></c-participants-list>
                     <lightning-button variant="brand" label="Create" title="Create Participant" onclick={onCreateParticipant} class="slds-m-left_x-small"></lightning-button>
                 </template>
                 <template if:true={showParticipantDetails}>
                     <c-participant-details participant-id={participantId} onclose={toggleParticipantDetails}></c-participant-details>
                 </template>
             </lightning-tab>
+            <lightning-tab label="Meeting Assignments">
+                <template if:true={showMAList}>
+                    <c-meeting-assignments-list oneditma={editMA}></c-meeting-assignments-list>
+                    <lightning-button variant="brand" label="Create" title="Create Meeting Assignment" onclick={onCreateMA} class="slds-m-left_x-small"></lightning-button>
+                </template>
+                <template if:true={showMADetails}>
+                    <c-meeting-assignment-details meeting-assignment-id={meetingAssignmentId} onclose={toggleMADetails}></c-meeting-assignment-details>
+                </template>
+            </lightning-tab>
         </lightning-tabset>
-</lightning-card>
+    </lightning-card>
 </template>

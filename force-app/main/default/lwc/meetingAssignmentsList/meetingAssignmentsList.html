@@ -1,9 +1,9 @@
 <template>
-    <lightning-card class="dev-plan-card slds-size_1-of-1" title="Meetings List" icon-name="standard:drafts">
+    <lightning-card class="dev-plan-card slds-size_1-of-1" title="Meeting Assignments List" icon-name="standard:drafts">
         <div style="height: 300px;">
             <lightning-datatable
                     key-field="Id"
-                    data={meetingsList.data}
+                    data={meetingAssignments}
                     suppress-bottom-bar
                     columns={columns}
                     onrowaction={handleRowAction}>

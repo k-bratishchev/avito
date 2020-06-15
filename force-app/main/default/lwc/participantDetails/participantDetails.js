@@ -15,6 +15,6 @@ export default class ParticipantDetails extends LightningElement {
     }
 
     showParticipantList() {
-        this.dispatchEvent(new CustomEvent('close', { detail: 123 }));
+        this.dispatchEvent(new CustomEvent('close'));
     }
 }
